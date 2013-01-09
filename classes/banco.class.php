@@ -38,9 +38,9 @@
 			if($msgerro==NULL) $msgerro=mysql_error($this->conexao);
 			$resultado = 	'Ocorreu um erro com os seguintses detalhes:<br />
 							<strong>Arquivo: </strong>'.$arquivo.'<br />
-							<strong>Arquivo: </strong>'.$rotina.'<br />
-							<strong>Arquivo: </strong>'.$numerro.'<br />
-							<strong>Arquivo: </strong>'.$msgerro;
+							<strong>Rotina: </strong>'.$rotina.'<br />
+							<strong>Codigo: </strong>'.$numerro.'<br />
+							<strong>Mesagem: </strong>'.$msgerro;
 			if($geraexcept==FALSE):
 				echo($resultado);
 			else:
