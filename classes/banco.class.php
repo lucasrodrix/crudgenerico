@@ -13,6 +13,7 @@
 
 		public function __construct(){
 			$this->conecta();
+			echo "Construtor da classe banco executado";
 		}//construct
 
 		public function __destruct(){
