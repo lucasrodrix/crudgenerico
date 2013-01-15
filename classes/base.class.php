@@ -13,7 +13,7 @@
 		public function addCampo($campo=NULL, $valor=NULL){
 			if($campo!=NULL):
 				$this->campos_valores[$campo] = $valor;
-			endif:
+			endif;
 		}//fim addCampo.
 
 		public function delCampo($campo=NULL){
@@ -25,12 +25,12 @@
 		public function setValor($campo=NULL, $valor=NULL){
 			if($campo!=NULL && $valor!=NULL):
 				$this->campos_valores[$campo] = $valor;
-			endif:
+			endif;
 		}//fim setValor.
 
 		public function getValor($campo=NULL){
 			if($campo!=NULL && array_key_exists($campo, $this->campos_valores)):
-				return $this->campos_valores[$campo]);
+				return $this->campos_valores[$campo];
 			else:
 				return FALSE;
 			endif;
