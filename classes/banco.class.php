@@ -71,6 +71,14 @@
 			return $this->executaSQL($sql);
 		}//deletar
 
+		public function selecionaTudo($objeto){
+			$sql = " SELECT * FROM ".$objeto->tabela;
+			if($objeto->extras_select!=NULL):
+				$sql .= " ".$objeto->extras_select;
+			endif;
+			return $this->executaSQL($sql);
+		}//selecionaTudo
+
 		public function atualizar($objeto){
 			//update nomedatabela set campo1=valor1, campo2=valor2 where campochave=valorchave
 			$sql="UPDATE ".$objeto->tabela." SET ";
@@ -90,15 +98,38 @@
 				$sql .=is_numeric($objeto->valorpk) ? $objeto->valorpk : "'".$objeto->valorpk ."'";
 			return $this->executaSQL($sql);			
 		}//atualizar
-
+	
 		public function executaSQL($sql=NULL){
 			if($sql!=NULL):
 				$query = mysql_query($sql) or $this->trataerro(__FILE__,__FUNCTION__);
 				$this->linhasafetadas = mysql_affected_rows($this->conexao);
+				if(substr(trim(strtolower($sql)),0,6)=='select'):
+					$this->dataset = $query;
+					return $query;
+				else:
+					return $this->linhasafetadas;
+				endif;
 			else:
 				$this->trataerro(__FILE__,__FUNCTION__,NULL,'Comando SQL nao informado na rotina',FALSE);
 			endif;
 		}//executaSQL
+
+		public function retornaDados($tipo=NULL){
+			switch (strtolower($tipo)):
+				case "array":
+					return mysql_fetch_array($this->dataset);
+					break;
+				case "assoc":
+					return mysql_fetch_assoc($this->dataset);
+					break;
+				case "object":
+					return mysql_fetch_object($this->dataset);
+					break;
+				default:
+					return mysql_fetch_object($this->dataset);
+					break;
+			endswitch;
+		}//retornaDados
 
 		public function trataerro($arquivo=NULL, $rotina=NULL, $numerro=NULL, $msgerro=NULL, $geraexcept=FALSE){
 			if($arquivo==NULL) $arquivo="não informado";
