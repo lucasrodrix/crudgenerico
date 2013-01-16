@@ -78,6 +78,25 @@
 			endif;
 			return $this->executaSQL($sql);
 		}//selecionaTudo
+	
+		public function selecionaCampos($objeto){
+			$sql = "SELECT ";
+			for($i=0; $i<count($objeto->campos_valores); $i++):
+				$sql .= key($objeto->campos_valores);
+				if($i < (count($objeto->campos_valores)-1)):
+					$sql .= ", ";
+				else:
+					$sql .= " ";
+				endif;
+				next($objeto->campos_valores);
+			endfor;
+			
+			$sql .= " FROM ".$objeto->tabela;
+			if($objeto->extras_select!=NULL):
+				$sql .= " ".$objeto->extras_select;
+			endif;
+			return $this->executaSQL($sql);
+		}//selecionaCampos
 
 		public function atualizar($objeto){
 			//update nomedatabela set campo1=valor1, campo2=valor2 where campochave=valorchave
