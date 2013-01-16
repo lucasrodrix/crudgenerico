@@ -2,10 +2,16 @@
 require_once("classes/clientes.class.php");
 	$cliente = new clientes();
 
-	$cliente->setValor('nome','Djalma');
-	$cliente->setValor('sobrenome','Toledo');
+	$cliente->setValor('nome','Lucas');
+	$cliente->setValor('sobrenome','Rodrix');
+	$cliente->valorpk = 5;
+	// $cliente->inserir($cliente);
+	// $cliente->atualizar($cliente);
+	$cliente->deletar($cliente);
 
-	$cliente->inserir($cliente);
+
+
+
 
 	echo '<pre>';
 	print_r($cliente);

@@ -58,11 +58,38 @@
 						endif;
 						next($objeto->campos_valores);
 					endfor;
-
-			echo $sql;
 			return $this->executaSQL($sql);
 
 		}//inserir
+
+		public function deletar($objeto){
+			//delete from tabela where campopk=valorpk
+			$sql = "DELETE FROM ".$objeto->tabela;
+			$sql .= " WHERE ".$objeto->campopk."=";
+			$sql .= is_numeric($objeto->valorpk) ? $objeto->valorpk : "'".$objeto->valorpk."'";
+			// echo ($sql);
+			return $this->executaSQL($sql);
+		}//deletar
+
+		public function atualizar($objeto){
+			//update nomedatabela set campo1=valor1, campo2=valor2 where campochave=valorchave
+			$sql="UPDATE ".$objeto->tabela." SET ";
+				for($i=0; $i<count($objeto->campos_valores); $i++):
+					$sql .= key($objeto->campos_valores)."=";
+					$sql .= is_numeric($objeto->campos_valores[key($objeto->campos_valores)]) ?
+						$objeto->campos_valores[key($objeto->campos_valores)]:
+						"'".$objeto->campos_valores[key($objeto->campos_valores)]."'";					
+					if ($i < (count($objeto->campos_valores)-1)):
+						$sql .= ", ";
+					else:
+						$sql .= " ";
+					endif;
+					next($objeto->campos_valores);
+				endfor;
+				$sql .="WHERE ".$objeto->campopk."=";
+				$sql .=is_numeric($objeto->valorpk) ? $objeto->valorpk : "'".$objeto->valorpk ."'";
+			return $this->executaSQL($sql);			
+		}//atualizar
 
 		public function executaSQL($sql=NULL){
 			if($sql!=NULL):
